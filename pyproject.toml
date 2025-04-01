@@ -1,6 +1,6 @@
 [project]
 name = "amazon-mcp"
-version = "0.1.0"
+version = "0.1.2"
 description = "Amazon MCP server to search & buy across thousands of online stores"
 readme = "README.md"
 requires-python = ">=3.10"
