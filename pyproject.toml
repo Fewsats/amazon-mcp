@@ -1,0 +1,21 @@
+[project]
+name = "amazon-mcp"
+version = "0.1.0"
+description = "Amazon MCP server to search & buy across thousands of online stores"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+ "mcp>=1.6.0",
+ "amazon-python>=0.0.3",
+]
+authors = [
+  {name = "Pol Alvarez", email = "pol@fewsats.com"},
+  {name = "Jordi Montes", email = "jordi@fewsats.com"},
+]
+
+[build-system]
+requires = [ "hatchling",]
+build-backend = "hatchling.build"
+
+[project.scripts]
+amazon-mcp = "amazon_mcp:main"
