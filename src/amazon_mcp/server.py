@@ -62,7 +62,7 @@ async def get_payment_offers(asin: str, shipping_address: Dict,
         
     Example:
         shipping_address = {
-            "name": "John Doe",
+            "full_name": "John Doe",
             "address": "123 Main St",
             "city": "New York",
             "state": "NY",
@@ -71,7 +71,7 @@ async def get_payment_offers(asin: str, shipping_address: Dict,
         }
         
         user = {
-            "name": "John Doe",
+            "full_name": "John Doe",
             "email": "john@example.com",
         }
         
@@ -189,7 +189,7 @@ async def get_user_info() -> Dict:
     Get the current user's profile and shipping addresses.
     
     Returns:
-        Dict containing user profile info (firstname, lastname, email) and list of shipping addresses
+        Dict containing user profile info (full_name, email) and list of shipping addresses
     """
     response = get_amazon().get_user_info()
     return handle_response(response)

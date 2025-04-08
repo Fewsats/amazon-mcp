@@ -6,7 +6,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
  "mcp>=1.6.0",
- "amazon-python>=0.0.3",
+ "amazon-python>=0.0.4",
 ]
 authors = [
   {name = "Pol Alvarez", email = "pol@fewsats.com"},
