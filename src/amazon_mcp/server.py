@@ -86,80 +86,11 @@ async def get_payment_offers(asin: str, shipping_address: Dict,
     )
     return handle_response(response)
 
-# @mcp.tool()
-# async def get_cart() -> Dict:
-#     """
-#     Get the current user's cart.
-    
-#     Returns:
-#         The cart details.
-#     """
-#     response = get_amazon().get_cart()
-#     return handle_response(response)
-
-
-# @mcp.tool()
-# async def add_to_cart(slug: str, product_id: str, variant_id: Optional[str] = None, quantity: int = 1) -> Dict:
-#     """
-#     Add an item to the user's cart. Some products do not have variants, in such cases use the product_id as variant_id too.
-    
-#     Args:
-#         slug: The product slug.
-#         product_id: The product ID.
-#         variant_id: The product variant ID.
-#         quantity: The quantity to add.
-        
-#     Returns:
-#         The updated cart.
-#     """
-#     response = get_amazon().add_to_cart(
-#         slug=slug,
-#         product_id=product_id,
-#         variant_id=variant_id,
-#         quantity=quantity
-#     )
-#     return handle_response(response)
-
-
-# @mcp.tool()
-# async def update_cart_item(slug: str, product_id: str, variant_id: str, quantity: int) -> Dict:
-#     """
-#     Update the quantity of an item in the cart. Some products do not have variants, in such cases use the product_id as variant_id too.
-    
-#     Args:
-#         slug: The product slug.
-#         product_id: The product ID.
-#         variant_id: The product variant ID.
-#         quantity: The new quantity.
-        
-#     Returns:
-#         The updated cart.
-#     """
-#     response = get_amazon().update_cart_item(
-#         slug=slug,
-#         product_id=product_id,
-#         variant_id=variant_id,
-#         quantity=quantity
-#     )
-#     return handle_response(response)
-
-
-# @mcp.tool()
-# async def clear_cart() -> Dict:
-#     """
-#     Clear all items from the cart.
-    
-#     Returns:
-#         The response from the API.
-#     """
-#     response = get_amazon().clear_cart()
-#     return handle_response(response)
-
 
 @mcp.tool()
-async def get_order(external_id: str) -> Dict:
+async def get_order_by_external_id(external_id: str) -> Dict:
     """
-    Get details for a specific order.
+    Get the status of a specific order.
     
     Args:
         external_id: The external ID of the order.
@@ -167,7 +98,21 @@ async def get_order(external_id: str) -> Dict:
     Returns:
         The order details.
     """
-    response = get_amazon().get_order(external_id=external_id)
+    response = get_amazon().get_order_by_external_id(external_id=external_id)
+    return handle_response(response)
+
+@mcp.tool()
+async def get_order_by_payment_token(payment_context_token: str) -> Dict:
+    """
+    Get the status of a specific order by payment context token.
+    
+    Args:
+        payment_context_token: The payment context token of the order.
+        
+    Returns:
+        The order details.
+    """
+    response = get_amazon().get_order_by_payment_token(payment_token=payment_context_token)
     return handle_response(response)
 
 
@@ -180,18 +125,6 @@ async def get_user_orders() -> List[Dict]:
         A list of orders.
     """
     response = get_amazon().get_user_orders()
-    return handle_response(response)
-
-
-@mcp.tool()
-async def get_user_info() -> Dict:
-    """
-    Get the current user's profile and shipping addresses.
-    
-    Returns:
-        Dict containing user profile info (full_name, email) and list of shipping addresses
-    """
-    response = get_amazon().get_user_info()
     return handle_response(response)
 
 

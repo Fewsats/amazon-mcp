@@ -4,7 +4,7 @@ requires-python = ">=3.10"
 
 [[package]]
 name = "amazon-mcp"
-version = "0.1.3"
+version = "0.1.4"
 source = { editable = "." }
 dependencies = [
     { name = "amazon-python" },
@@ -13,22 +13,22 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "amazon-python", specifier = ">=0.0.4" },
+    { name = "amazon-python", specifier = ">=0.0.5" },
     { name = "mcp", specifier = ">=1.6.0" },
 ]
 
 [[package]]
 name = "amazon-python"
-version = "0.0.4"
+version = "0.0.5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "cryptography" },
     { name = "fastcore" },
     { name = "httpx" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/57/0d/7faa558db125fde5d9985a1ddf37bf19857cccd1b825ed55f731fc5abcc1/amazon_python-0.0.4.tar.gz", hash = "sha256:31237a94375de88d1917aa6187972a0017ae1659a0c1b5136c13494af5add122", size = 10181 }
+sdist = { url = "https://files.pythonhosted.org/packages/92/a6/ad3440733e7848b72302bec5dd128b856819a66480dad617f7950602a982/amazon_python-0.0.5.tar.gz", hash = "sha256:7939788ded91f23e1031e96dea1f5018bae09bfb00227560ed2d05d2d9aeefc5", size = 10251 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/2a/47/7bb901ca19c9138cae6d7d6474a0ad2f5cca5be03680d64352caa329039e/amazon_python-0.0.4-py3-none-any.whl", hash = "sha256:6f38be7e71655009bf5f9558bfa705738087a2528cb6de11b8a1c6f811dc7901", size = 9877 },
+    { url = "https://files.pythonhosted.org/packages/c5/f1/344e319e744dab938e6ef985f0286de9ab3ef8353326ee4b77df889f2373/amazon_python-0.0.5-py3-none-any.whl", hash = "sha256:f738433acd1d9072ce80e543efb4b8cdf3c1a6ab360e19db2e3453d3116b75b8", size = 9971 },
 ]
 
 [[package]]
