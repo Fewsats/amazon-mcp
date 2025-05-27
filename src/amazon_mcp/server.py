@@ -88,6 +88,89 @@ async def get_payment_offers(asin: str, shipping_address: Dict,
 
 
 @mcp.tool()
+async def get_payment_offers_x402(asin: str, shipping_address: Dict,
+                 user: Dict, quantity: int = 1) -> Dict:
+    """
+    Get the payment offers for a product.
+    Before calling this tool, check if the user has already provided the shipping address and user information. 
+    Otherwise, ask the user for the shipping address and user information.
+
+    Args:
+        asin: The product ASIN.
+        quantity: The quantity to purchase.
+        shipping_address: The shipping address.
+        user: The user information.
+        
+    Example:
+        shipping_address = {
+            "full_name": "John Doe",
+            "address": "123 Main St",
+            "city": "New York",
+            "state": "NY",
+            "country": "US",
+            "postal_code": "10001"
+        }
+        
+        user = {
+            "full_name": "John Doe",
+            "email": "john@example.com",
+        }
+        
+    Returns:
+        X402 offer that can be paid by X402-compatible clients.
+    """
+    response = get_amazon().buy_now_with_x402(
+        asin=asin,
+        quantity=quantity,
+        shipping_address=shipping_address,
+        user=user
+    )
+    return handle_response(response)
+
+
+@mcp.tool()
+async def pay_with_x402(x_payment: str, asin: str, shipping_address: Dict,
+                 user: Dict, quantity: int = 1) -> Dict:
+    """
+    Pay for a product with X402.
+    You need to add the generated X-PAYMENT header to the request.
+
+    Args:
+        x_payment: The generated X-PAYMENT header.
+        asin: The product ASIN.
+        quantity: The quantity to purchase.
+        shipping_address: The shipping address.
+        user: The user information.
+        
+    Example:
+        shipping_address = {
+            "full_name": "John Doe",
+            "address": "123 Main St",
+            "city": "New York",
+            "state": "NY",
+            "country": "US",
+            "postal_code": "10001"
+        }
+        
+        user = {
+            "full_name": "John Doe",
+            "email": "john@example.com",
+        }
+        
+    Returns:
+        The payment response header.
+    """
+    response = get_amazon().buy_now_with_x402(
+        asin=asin,
+        quantity=quantity,
+        shipping_address=shipping_address,
+        user=user,
+        x_payment=x_payment
+    )
+    return handle_response(response)
+
+
+@mcp.tool()
 async def get_order_by_external_id(external_id: str) -> Dict:
     """
     Get the status of a specific order.
