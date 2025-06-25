@@ -30,39 +30,44 @@ def handle_response(response):
 
 
 @mcp.tool()
-async def search(q: str) -> Dict:
+async def amazon_search(q: str, domain: str = "amazon.com") -> Dict:
     """
-    Search for products matching the query.
-    
+    Search for products matching the query in amazon.
+    If the user does not specify a domain, try to infer the domain from the product description or user's language.
+
     Args:
         q: The search query of a specific ASIN of a given product.
-        
+        domain: The amazon domain of the search. E.g. amazon.com, amazon.es ...
+
     Returns:
         The search results.
     """
     response = get_amazon().search(
         query=q,
+        domain=domain
     )
     return handle_response(response)
 
 
 @mcp.tool()
-async def get_payment_offers(asin: str, shipping_address: Dict,
-                 user: Dict, quantity: int = 1) -> Dict:
+async def amazon_get_payment_offers(product_url: str, shipping_address: Dict,
+                 user: Dict, asin: str = "", quantity: int = 1, protocol: str = "L402") -> Dict:
     """
     Get the payment offers for a product.
     Before calling this tool, check if the user has already provided the shipping address and user information. 
     Otherwise, ask the user for the shipping address and user information.
 
     Args:
-        asin: The product ASIN.
-        quantity: The quantity to purchase.
+        product_url: The Amazon URL of the product returned by the search tool.
         shipping_address: The shipping address.
         user: The user information.
+        asin: The product ASIN (optional).
+        quantity: The quantity to purchase.
         
     Example:
         shipping_address = {
             "full_name": "John Doe",
+            "phone": "+1234567890",
             "address": "123 Main St",
             "city": "New York",
             "state": "NY",
@@ -76,75 +81,46 @@ async def get_payment_offers(asin: str, shipping_address: Dict,
         }
         
     Returns:
-        L402 offer that can be paid by L402-compatible clients.
+        HTTP Status 402 Payment Required and the L402 offer that can be paid by L402-compatible clients.
     """
-    response = get_amazon().buy_now(
-        asin=asin,
-        quantity=quantity,
-        shipping_address=shipping_address,
-        user=user
-    )
+    if protocol == "X402":
+        response = get_amazon().buy_now_with_x402(
+            product_url=product_url,
+            shipping_address=shipping_address,
+            user=user,
+            asin=asin,
+            quantity=quantity
+        )
+    else: # Use L402 protocol by default
+        response = get_amazon().buy_now(
+            product_url=product_url,
+            shipping_address=shipping_address,
+            user=user,
+            asin=asin,
+            quantity=quantity
+        )
     return handle_response(response)
 
 
 @mcp.tool()
-async def get_payment_offers_x402(asin: str, shipping_address: Dict,
-                 user: Dict, quantity: int = 1) -> Dict:
-    """
-    Get the payment offers for a product.
-    Before calling this tool, check if the user has already provided the shipping address and user information. 
-    Otherwise, ask the user for the shipping address and user information.
-
-    Args:
-        asin: The product ASIN.
-        quantity: The quantity to purchase.
-        shipping_address: The shipping address.
-        user: The user information.
-        
-    Example:
-        shipping_address = {
-            "full_name": "John Doe",
-            "address": "123 Main St",
-            "city": "New York",
-            "state": "NY",
-            "country": "US",
-            "postal_code": "10001"
-        }
-        
-        user = {
-            "full_name": "John Doe",
-            "email": "john@example.com",
-        }
-        
-    Returns:
-        X402 offer that can be paid by X402-compatible clients.
-    """
-    response = get_amazon().buy_now_with_x402(
-        asin=asin,
-        quantity=quantity,
-        shipping_address=shipping_address,
-        user=user
-    )
-    return handle_response(response)
-
-
-@mcp.tool()
-async def pay_with_x402(x_payment: str, asin: str, shipping_address: Dict,
-                 user: Dict, quantity: int = 1) -> Dict:
+async def pay_with_x402(x_payment: str, product_url: str, shipping_address: Dict,
+                 user: Dict, asin: str = "", quantity: int = 1) -> Dict:
     """
     Pay for a product with X402.
     You need to add the generated X-PAYMENT header to the request.
 
     Args:
         x_payment: The generated X-PAYMENT header.
-        asin: The product ASIN.
-        quantity: The quantity to purchase.
+        product_url: The URL of the product.
         shipping_address: The shipping address.
         user: The user information.
-        
+        asin: The product ASIN (optional).
+        quantity: The quantity to purchase.
+
     Example:
         shipping_address = {
             "full_name": "John Doe",
+            "phone": "+1234567890",
             "address": "123 Main St",
             "city": "New York",
             "state": "NY",
@@ -161,10 +137,11 @@ async def pay_with_x402(x_payment: str, asin: str, shipping_address: Dict,
         The payment response header.
     """
     response = get_amazon().buy_now_with_x402(
-        asin=asin,
-        quantity=quantity,
+        product_url=product_url,
         shipping_address=shipping_address,
         user=user,
+        asin=asin,
+        quantity=quantity,
         x_payment=x_payment
     )
     return handle_response(response)
