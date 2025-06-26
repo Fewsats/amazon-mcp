@@ -36,4 +36,4 @@ run-release-client: build
 
 # 5. Release the package to PyPI
 release: clean sync-version build
-    uv publish --token {{PYPI_TOKEN}} 
+    uv publish --token $PYPI_TOKEN
