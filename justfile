@@ -27,7 +27,7 @@ build: clean sync-version
 
 # 4.a Test the release locally using the release wheel. I am not sure why the command `amazon-mcp` can't be ommited here.
 run-release: build
-    uv tool run --with dist/amazon_mcp-0.1.0-py3-none-any.whl amazon-mcp
+    uv tool run --with dist/amazon_mcp-0.1.11-py3-none-any.whl amazon-mcp
 
 # 4.b Test the release from an MCP client using the path
 # NOTE this can still fail / use old version depending on uv envs, not sure how to fix it

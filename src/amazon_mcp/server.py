@@ -30,11 +30,12 @@ def handle_response(response):
 
 
 @mcp.tool()
-async def amazon_search(q: str, domain: str = "amazon.com") -> Dict:
+async def amazon_search(q: str, domain: str = "amazon.com"):
     """
     Search for products matching the query in amazon.
     If the user does not specify a domain, try to infer the domain from the product description or user's language.
-
+    IMPORTANT: whenever you share a link with the user, make sure to preserve the affiliate tags.
+    
     Args:
         q: The search query of a specific ASIN of a given product.
         domain: The amazon domain of the search. E.g. amazon.com, amazon.es ...
@@ -51,7 +52,7 @@ async def amazon_search(q: str, domain: str = "amazon.com") -> Dict:
 
 @mcp.tool()
 async def amazon_get_payment_offers(product_url: str, shipping_address: Dict,
-                 user: Dict, asin: str = "", quantity: int = 1, protocol: str = "L402") -> Dict:
+                 user: Dict, asin: str = "", quantity: int = 1, protocol: str = "L402"):
     """
     Get the payment offers for a product.
     Before calling this tool, check if the user has already provided the shipping address and user information. 
@@ -104,7 +105,7 @@ async def amazon_get_payment_offers(product_url: str, shipping_address: Dict,
 
 @mcp.tool()
 async def pay_with_x402(x_payment: str, product_url: str, shipping_address: Dict,
-                 user: Dict, asin: str = "", quantity: int = 1) -> Dict:
+                 user: Dict, asin: str = "", quantity: int = 1):
     """
     Pay for a product with X402.
     You need to add the generated X-PAYMENT header to the request.
@@ -148,7 +149,7 @@ async def pay_with_x402(x_payment: str, product_url: str, shipping_address: Dict
 
 
 @mcp.tool()
-async def get_order_by_external_id(external_id: str) -> Dict:
+async def get_order_by_external_id(external_id: str):
     """
     Get the status of a specific order.
     
@@ -162,7 +163,7 @@ async def get_order_by_external_id(external_id: str) -> Dict:
     return handle_response(response)
 
 @mcp.tool()
-async def get_order_by_payment_token(payment_context_token: str) -> Dict:
+async def get_order_by_payment_token(payment_context_token: str):
     """
     Get the status of a specific order by payment context token.
     
@@ -177,7 +178,7 @@ async def get_order_by_payment_token(payment_context_token: str) -> Dict:
 
 
 @mcp.tool()
-async def get_user_orders() -> List[Dict]:
+async def get_user_orders():
     """
     Get all orders for the current user.
     

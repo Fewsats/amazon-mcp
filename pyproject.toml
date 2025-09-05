@@ -1,12 +1,12 @@
 [project]
 name = "amazon-mcp"
-version = "0.1.9"
+version = "0.1.13"
 description = "Amazon MCP server to search & buy across thousands of online stores"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
- "mcp>=1.6.0",
- "amazon-python>=0.0.8",
+ "mcp>=1.10.1",
+ "amazon-python>=0.0.11",
 ]
 authors = [
   {name = "Pol Alvarez", email = "pol@fewsats.com"},
