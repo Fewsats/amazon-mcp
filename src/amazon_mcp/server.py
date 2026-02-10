@@ -5,7 +5,7 @@ from typing import Dict, List, Optional
 
 
 # Create FastMCP instance
-mcp = FastMCP("Fewsats MCP Server")
+mcp = FastMCP("Amazon MCP Server by Fewsats", port=9001)
 
 
 def get_amazon():
@@ -108,9 +108,10 @@ async def pay_with_x402(x_payment: str, product_url: str, shipping_address: Dict
                  user: Dict, asin: str = "", quantity: int = 1):
     """
     Pay for a product with X402.
-    You need to add the generated X-PAYMENT header to the request.
+    You need to add the generated PAYMENT-SIGNATURE header to the request.
 
     Args:
+        x_payment: The generated PAYMENT-SIGNATURE header.
         x_payment: The generated X-PAYMENT header.
         product_url: The URL of the product.
         shipping_address: The shipping address.
@@ -190,4 +191,4 @@ async def get_user_orders():
 
 
 def main():
-    mcp.run()
+    mcp.run(transport="streamable-http")
