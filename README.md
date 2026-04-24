@@ -1,5 +1,7 @@
 # Amazon Shopping with Claude
 
+> **⚠️ This project has been discontinued and is no longer maintained.** No further updates, bug fixes, or support will be provided. The repository is archived for reference only.
+
 This integration allows you to search and buy Amazon products directly through your AI assistant. Shop Amazon's vast catalog by simply chatting with Claude!
 
 ## What You Need
